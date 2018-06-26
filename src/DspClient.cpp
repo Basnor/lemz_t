@@ -1,4 +1,4 @@
-#include "DspClient.h"
+#include "src/DspClient.h"
 
 DspClient::DspClient(QObject *parent)
     : QObject(parent)

@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 
-#include <DspClient.h>
-#include <Recorder.h>
+#include <src/DspClient.h>
+#include <src/Recorder.h>
 
 int main(int argc, char *argv[])
 {

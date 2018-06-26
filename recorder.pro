@@ -7,11 +7,12 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += main.cpp \
-    Recorder.cpp \
-    DspClient.cpp
+SOURCES += \
+    src/main.cpp \
+    src/Recorder.cpp \
+    src/DspClient.cpp
 
 HEADERS += \
-    Recorder.h \
-    DspClient.h
+    src/Recorder.h \
+    src/DspClient.h
 
