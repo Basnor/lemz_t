@@ -132,7 +132,7 @@ void Recorder::setRecordsBankPath(const QString &path)
 {
     if (!m_recordsBankPath.exists(path))
     {
-        m_recordsBankPath.mkdir(path);
+        m_recordsBankPath.mkpath(path);
     }
 
     m_recordsBankPath.setPath(path);
