@@ -16,7 +16,7 @@ class Recorder : public QObject
 
 public:
     Recorder(QObject* parent = nullptr);
-    ~Recorder();
+    ~Recorder() override;
 
     void OnConnected() override;
     void OnConnectionFailed() override;

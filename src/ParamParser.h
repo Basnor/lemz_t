@@ -31,9 +31,9 @@ public:
 
 private:
     //проверяет Ip-адрес на соответствие общему виду
-    bool checkIp (QString checkingIpAdress) const;
+    static bool checkIp (const QString &checkingIpAdress);
     //проверяет введенный номер порта на соответствие диапазону и символам
-    bool checkPort (QString checkingPort) const;
+    static bool checkPort (const QString &checkingPort);
 
     //введенные значения ключей
     QList<QString> keyValuePairs;

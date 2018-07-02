@@ -48,12 +48,11 @@ bool ParamParser::parseParams (QMap<QString, QString> &params)
         {
             bool isKeyMatch = false;
 
-            for (QMap<KeyName,QString>::iterator it = keyStringByName.begin();
-                 it != keyStringByName.end(); ++it)
+            for (auto it = keyStringByName.begin(); it != keyStringByName.end(); ++it)
             {
                 if (!QString::localeAwareCompare(splitedKeyValue[0], it.value()))
                 {
-                    bool isKeyCorrect;
+                    bool isKeyCorrect = false;
                     switch (it.key())
                     {
                     case KeyName::Ip:
@@ -99,7 +98,7 @@ bool ParamParser::parseParams (QMap<QString, QString> &params)
 }
 
 
-bool ParamParser::checkIp (QString checkingIpAdress) const
+bool ParamParser::checkIp (const  QString &checkingIpAdress)
 {
     QRegExp regExpIp("^(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])"
                      "(.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])){3}$");
@@ -111,11 +110,11 @@ bool ParamParser::checkIp (QString checkingIpAdress) const
     return true;
 }
 
-bool ParamParser::checkPort (QString checkingPort) const
+bool ParamParser::checkPort (const QString &checkingPort)
 {
     bool ok;
-    checkingPort.toInt(&ok, 10);
-    if ((checkingPort.toInt(&ok, 10) < 0) || (checkingPort.toInt(&ok, 10) > 65535) || (ok == false))
+    int port = checkingPort.toInt(&ok, 10);
+    if ((ok == false) || (port < 0) || (port > 65535))
     {
         std::cout << "Неверный номер порта" << std::endl;
         return false;

@@ -31,17 +31,17 @@ Recorder::~Recorder()
 
 void Recorder::OnConnected()
 {
-    std::cout << "Connected" << std::endl;
+    std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData() << " Connected" << std::endl;
 }
 
 void Recorder::OnConnectionFailed()
 {
-//    std::cout << "ConnectionFailed" << std::endl;
+    std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData() << " ConnectionFailed" << std::endl;
 }
 
 void Recorder::OnDisconnected()
 {
-    std::cout << "Disconnected" << std::endl;
+    std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData() << " Disconnected" << std::endl;
 }
 
 void Recorder::OnData(const uint8_t* data, size_t size)
@@ -113,12 +113,12 @@ bool Recorder::newFileRecord()
     m_file->setFileName(m_recordsBankPath.path() + "/" + dir + "/" + filename);
     if(m_file->open(QIODevice::WriteOnly))
     {
-        std::cout << "record in " << m_file->fileName().toStdString() << std::endl;
+        std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData() << " Start record in " << m_file->fileName().toStdString() << std::endl;
         return true;
     }
     else
     {
-        std::cout << "file not open" << m_file->fileName().toStdString() << std::endl;
+        std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData() << " File not open" << m_file->fileName().toStdString() << std::endl;
         return false;
     }
 }

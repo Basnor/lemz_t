@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <QTimer>
+#include <QDebug>
 
 class QTcpSocket;
 class QTimer;
@@ -14,6 +15,7 @@ struct ITCPConnectionCallback
     virtual void OnConnectionFailed() = 0;
     virtual void OnDisconnected() = 0;
     virtual void OnData(const uint8_t*, size_t) = 0;
+    virtual ~ITCPConnectionCallback()= default;
 };
 
 
@@ -25,7 +27,7 @@ class DspClient : public QObject
 public:
     DspClient(QObject * parent = nullptr);
 
-//    void send(const uint8_t* data, size_t size) override;
+    //void send(const uint8_t* data, size_t size);
 
     void connect(const QString& ip, uint16_t port);
     void disconnect();

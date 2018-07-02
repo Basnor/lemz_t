@@ -64,10 +64,10 @@ void DspClient::reconnect()
 }
 
 
-//void DspClient::send(const uint8_t *data, size_t size)
-//{
-//    if (socket->state() != QAbstractSocket::ConnectedState)
-//        return;
+/*void DspClient::send(const uint8_t *data, size_t size)
+{
+    if (socket->state() != QAbstractSocket::ConnectedState)
+        return;
 
-//    socket->write(reinterpret_cast<const char*>(data), size);
-//}
+    socket->write(reinterpret_cast<const char*>(data), size);
+}*/
