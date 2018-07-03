@@ -13,6 +13,7 @@ ParamParser::ParamParser(int argc, char *argv[])
     keyStringByName.insert(KeyName::Ip, "ip");
     keyStringByName.insert(KeyName::Port, "port");
     keyStringByName.insert(KeyName::Path, "path");
+    keyStringByName.insert(KeyName::Lang, "lang");
 
     for (auto i=1; i < argc; i++)
     {
@@ -21,6 +22,26 @@ ParamParser::ParamParser(int argc, char *argv[])
     }
 }
 
+
+bool ParamParser::findLang (QMap<QString, QString> &params)
+{
+    for (auto keyValue : keyValuePairs)
+    {
+        QStringList splitedKeyValue = QString(keyValue).split("=");
+
+        if (splitedKeyValue.size() == 2)
+        {
+            if ((QString::localeAwareCompare(keyValue, keyStringByName[KeyName::Lang])) && (checkLang(splitedKeyValue[1])))
+            {
+                 params["lang"]=splitedKeyValue[1];
+                 return true;
+            }
+        }
+    }
+    return false;
+}
+
+
 bool ParamParser::findHelp ()
 {
         for (auto keyValuePair : keyValuePairs)
@@ -28,6 +49,7 @@ bool ParamParser::findHelp ()
             if (!QString::localeAwareCompare(keyValuePair, keyStringByName[KeyName::Help]))
             {
                 qDebug().noquote() << QObject::tr("Used keys:"); // Используемые ключи
+                qDebug().noquote() << QObject::tr("lang=[language]") << "\t" << QObject::tr("set language (eng or rus)");
                 qDebug().noquote() << QObject::tr("ip=[ip-adress]") << "\t\t" << QObject::tr("set ip-adress");
                 qDebug().noquote() << QObject::tr("port=[port number]") << "\t" << QObject::tr("set port number");
                 qDebug().noquote() << QObject::tr("path=[folder name]") << "\t" << QObject::tr("set folder name");
@@ -56,6 +78,9 @@ bool ParamParser::parseParams (QMap<QString, QString> &params)
                     bool isKeyCorrect = false;
                     switch (it.key())
                     {
+                    case KeyName::Lang:
+                        isKeyCorrect = true;
+                        break;
                     case KeyName::Ip:
                         isKeyCorrect = checkIp(splitedKeyValue[1]);
                         break;
@@ -76,10 +101,6 @@ bool ParamParser::parseParams (QMap<QString, QString> &params)
                         isKeyMatch = true;
                     }
                     else return false;
-
-                    // отслеживание разделённых введённых ключей
-                    std::cout << splitedKeyValue[0].toUtf8().constData() << std::endl;
-                    std::cout << splitedKeyValue[1].toUtf8().constData() << std::endl;
                 }
             }
             if (!isKeyMatch)
@@ -94,7 +115,6 @@ bool ParamParser::parseParams (QMap<QString, QString> &params)
             return false;
         }
     }
-
     return true;
 }
 
@@ -121,4 +141,10 @@ bool ParamParser::checkPort (const QString &checkingPort)
         return false;
     }
     return true;
+}
+
+bool ParamParser::checkLang (const QString &checkingLang)
+{
+    if ((checkingLang == "rus") || (checkingLang == "eng")) return true;
+    else return false;
 }

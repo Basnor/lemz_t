@@ -6,12 +6,6 @@
 #include <src/Recorder.h>
 #include <src/ParamParser.h>
 
-
-#include <iostream>
-#include <iomanip>
-#include <ios>
-
-
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
@@ -21,38 +15,24 @@ int main(int argc, char *argv[])
     params.insert("ip", "127.0.0.1");
     params.insert("port", "10600");
     params.insert("path", "dspRec");
+    params.insert("lang", "eng");
 
+    //поиск языкового ключа
     QTranslator t;
-    int lang = 1;
-
-    if (lang == 1)
+    if (paramParser.findLang(params))
     {
-
-        t.load(":/tr/recorder_rus.qm");
-        //t.load("recorder_rus", "tr");
-        a.installTranslator(&t);
+        if (params["lang"] == "rus")
+        {
+            t.load(":/tr/recorder_rus.qm");
+            a.installTranslator(&t);
+        }
     }
 
-    /*std::cout << "НАЧАЛЬНЫЕ ЗНАЧЕНИЯ"  << std::endl;
-    std::cout << params["ip"].toUtf8().constData()  << std::endl;
-    std::cout << params["port"].toUtf8().constData()  << std::endl;
-    std::cout << params["path"].toUtf8().constData()  << std::endl;*/
-
+    //поиск ключа справки
     if (!paramParser.findHelp()) return 0;
 
+    //проверка ключей
     if (!paramParser.parseParams(params)) return 0;
-
-    /*// отслеживание введённых ключей
-    std::cout << argc << std::endl;
-    for (int i = 1; i < argc; i++)
-    {
-        std::cout << argv[i] << std::endl;
-    }
-
-    std::cout << "КОНЕЧНЫЕ ЗНАЧЕНИЯ"  << std::endl;
-    std::cout << params["ip"].toUtf8().constData()  << std::endl;
-    std::cout << params["port"].toUtf8().constData()  << std::endl;
-    std::cout << params["path"].toUtf8().constData()  << std::endl;*/
 
     DspClient tcp;
     Recorder* rec = new Recorder(&tcp);

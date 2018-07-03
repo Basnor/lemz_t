@@ -19,11 +19,14 @@ public:
         Help,
         Ip,
         Port,
-        Path
+        Path,
+        Lang
     };
 
     ParamParser(int argc, char *argv[]);
 
+    //поск языкового ключа
+    bool findLang (QMap<QString, QString> &params);
     //поиск ключа -h и вывод справки при его наличии
     bool findHelp();
     //разбивает введеный запрос на ключ-значение и обновляет значения исходных параметров
@@ -34,6 +37,8 @@ private:
     static bool checkIp (const QString &checkingIpAdress);
     //проверяет введенный номер порта на соответствие диапазону и символам
     static bool checkPort (const QString &checkingPort);
+    //проверяет языковой ключ
+    static bool checkLang (const QString &checkingLang);
 
     //введенные значения ключей
     QList<QString> keyValuePairs;
