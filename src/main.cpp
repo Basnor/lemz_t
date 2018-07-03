@@ -1,14 +1,16 @@
 #include <QCoreApplication>
+#include <QTranslator>
+#include <QDebug>
 
 #include <src/DspClient.h>
 #include <src/Recorder.h>
 #include <src/ParamParser.h>
 
+
 #include <iostream>
 #include <iomanip>
 #include <ios>
 
-#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -19,6 +21,17 @@ int main(int argc, char *argv[])
     params.insert("ip", "127.0.0.1");
     params.insert("port", "10600");
     params.insert("path", "dspRec");
+
+    QTranslator t;
+    int lang = 1;
+
+    if (lang == 1)
+    {
+
+        t.load(":/tr/recorder_rus.qm");
+        //t.load("recorder_rus", "tr");
+        a.installTranslator(&t);
+    }
 
     /*std::cout << "НАЧАЛЬНЫЕ ЗНАЧЕНИЯ"  << std::endl;
     std::cout << params["ip"].toUtf8().constData()  << std::endl;
@@ -40,7 +53,6 @@ int main(int argc, char *argv[])
     std::cout << params["ip"].toUtf8().constData()  << std::endl;
     std::cout << params["port"].toUtf8().constData()  << std::endl;
     std::cout << params["path"].toUtf8().constData()  << std::endl;*/
-
 
     DspClient tcp;
     Recorder* rec = new Recorder(&tcp);

@@ -5,6 +5,7 @@
 #include <ios>
 
 #include <QRegExp>
+#include <QDebug>
 
 ParamParser::ParamParser(int argc, char *argv[])
 {
@@ -26,10 +27,10 @@ bool ParamParser::findHelp ()
         {
             if (!QString::localeAwareCompare(keyValuePair, keyStringByName[KeyName::Help]))
             {
-                std::cout << "Определено использование ключей:" << std::endl;
-                std::cout << "ip=[ip-адрес]\t\tзадать ip-адрес" << std::endl;
-                std::cout << "port=[номер порта]\tзадать номер порта" << std::endl;
-                std::cout << "path=[имя папки]\tзадать именя папки с результатами" << std::endl;
+                qDebug().noquote() << QObject::tr("Used keys:"); // Используемые ключи
+                qDebug().noquote() << QObject::tr("ip=[ip-adress]") << "\t\t" << QObject::tr("set ip-adress");
+                qDebug().noquote() << QObject::tr("port=[port number]") << "\t" << QObject::tr("set port number");
+                qDebug().noquote() << QObject::tr("path=[folder name]") << "\t" << QObject::tr("set folder name");
 
                 return false;
             }
@@ -83,13 +84,13 @@ bool ParamParser::parseParams (QMap<QString, QString> &params)
             }
             if (!isKeyMatch)
             {
-                std::cout << "Несуществующий ключ" << std::endl;
+                qDebug().noquote() << QObject::tr("Non-existent key");
                 return false;
             }
         }
         else
         {
-            std::cout << "Несуществующий ключ" << std::endl;
+            qDebug().noquote() << QObject::tr("Non-existent key");
             return false;
         }
     }
@@ -104,7 +105,7 @@ bool ParamParser::checkIp (const  QString &checkingIpAdress)
                      "(.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])){3}$");
     if (!regExpIp.exactMatch(checkingIpAdress))
     {
-        std::cout << "Неверный ip-адрес" << std::endl;
+        qDebug().noquote() << QObject::tr("Invalid ip-address");
         return false;
     }
     return true;
@@ -116,7 +117,7 @@ bool ParamParser::checkPort (const QString &checkingPort)
     int port = checkingPort.toInt(&ok, 10);
     if ((ok == false) || (port < 0) || (port > 65535))
     {
-        std::cout << "Неверный номер порта" << std::endl;
+        qDebug().noquote() << QObject::tr("Invalid port number");
         return false;
     }
     return true;

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>tr/recorder_rus.ts</file>
+        <file>tr/recorder_rus.qm</file>
+    </qresource>
+</RCC>

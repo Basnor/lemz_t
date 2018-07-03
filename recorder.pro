@@ -11,10 +11,18 @@ SOURCES += \
     src/main.cpp \
     src/Recorder.cpp \
     src/DspClient.cpp \
-    src/ParamParser.cpp
+    src/ParamParser.cpp \
 
 HEADERS += \
     src/Recorder.h \
     src/DspClient.h \
-    src/ParamParser.h
+    src/ParamParser.h \
 
+TRANSLATIONS += \
+    :/tr/recorder_rus.ts
+
+DISTFILES += \
+    :/tr/recorder_rus.ts
+
+RESOURCES += \
+    translations.qrc
