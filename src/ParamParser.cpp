@@ -15,52 +15,60 @@ ParamParser::ParamParser(int argc, char *argv[])
     keyStringByName.insert(KeyName::Path, "path");
     keyStringByName.insert(KeyName::Lang, "lang");
 
+    params.insert("ip", "127.0.0.1");
+    params.insert("port", "10600");
+    params.insert("path", "dspRec");
+    params.insert("lang", "eng");
+
     for (auto i=1; i < argc; i++)
     {
         auto keyValuePair = argv[i];
         keyValuePairs.append(keyValuePair);
     }
+
+    parseParams();
+    checkParams();
 }
 
-
-bool ParamParser::findLang (QMap<QString, QString> &params)
+QString ParamParser::getLang()
 {
-    for (auto keyValue : keyValuePairs)
-    {
-        QStringList splitedKeyValue = QString(keyValue).split("=");
+    return params["lang"];
+}
 
-        if (splitedKeyValue.size() == 2)
-        {
-            if ((QString::localeAwareCompare(keyValue, keyStringByName[KeyName::Lang])) && (checkLang(splitedKeyValue[1])))
-            {
-                 params["lang"]=splitedKeyValue[1];
-                 return true;
-            }
-        }
+QString ParamParser::getIp()
+{
+    return params["ip"];
+}
+
+int ParamParser::getPort()
+{
+    return params["port"].toInt();
+}
+
+QString ParamParser::getPath()
+{
+    return params["path"];
+}
+
+bool ParamParser::getHelp ()
+{
+    if (findHelp())
+    {
+        std::cout << QObject::tr("Used keys:").toUtf8().constData() << std::endl; // Используемые ключи
+        std::cout << QObject::tr("lang=[language]").toUtf8().constData()
+                  << "\t" << QObject::tr("set language (eng or rus)").toUtf8().constData() << std::endl;
+        std::cout << QObject::tr("ip=[ip-adress]").toUtf8().constData()
+                  << "\t\t" << QObject::tr("set ip-adress").toUtf8().constData() << std::endl;
+        std::cout << QObject::tr("port=[port number]").toUtf8().constData()
+                  << "\t" << QObject::tr("set port number").toUtf8().constData() << std::endl;
+        std::cout << QObject::tr("path=[folder name]").toUtf8().constData()
+                  << "\t" << QObject::tr("set folder name").toUtf8().constData() << std::endl;
+        return true;
     }
     return false;
 }
 
-
-bool ParamParser::findHelp ()
-{
-        for (auto keyValuePair : keyValuePairs)
-        {
-            if (!QString::localeAwareCompare(keyValuePair, keyStringByName[KeyName::Help]))
-            {
-                qDebug().noquote() << QObject::tr("Used keys:"); // Используемые ключи
-                qDebug().noquote() << QObject::tr("lang=[language]") << "\t" << QObject::tr("set language (eng or rus)");
-                qDebug().noquote() << QObject::tr("ip=[ip-adress]") << "\t\t" << QObject::tr("set ip-adress");
-                qDebug().noquote() << QObject::tr("port=[port number]") << "\t" << QObject::tr("set port number");
-                qDebug().noquote() << QObject::tr("path=[folder name]") << "\t" << QObject::tr("set folder name");
-
-                return false;
-            }
-        }
-    return true;
-}
-
-bool ParamParser::parseParams (QMap<QString, QString> &params)
+void ParamParser::parseParams()
 {
     for (auto keyValue : keyValuePairs)
     {
@@ -69,53 +77,55 @@ bool ParamParser::parseParams (QMap<QString, QString> &params)
         //введеное значение вида ключ=значение
         if (splitedKeyValue.size() == 2)
         {
-            bool isKeyMatch = false;
-
-            for (auto it = keyStringByName.begin(); it != keyStringByName.end(); ++it)
-            {
-                if (!QString::localeAwareCompare(splitedKeyValue[0], it.value()))
-                {
-                    bool isKeyCorrect = false;
-                    switch (it.key())
-                    {
-                    case KeyName::Lang:
-                        isKeyCorrect = true;
-                        break;
-                    case KeyName::Ip:
-                        isKeyCorrect = checkIp(splitedKeyValue[1]);
-                        break;
-                    case KeyName::Port:
-                        isKeyCorrect = checkPort(splitedKeyValue[1]);
-                        break;
-                    case KeyName::Path:
-                        isKeyCorrect = true;
-                        break;
-                    default:
-                        break;
-                    }
-
-                    if (isKeyCorrect)
-                    {
-                        params[it.value()]=splitedKeyValue[1];
-                        //введенный ключ существует
-                        isKeyMatch = true;
-                    }
-                    else return false;
-                }
-            }
-            if (!isKeyMatch)
-            {
-                qDebug().noquote() << QObject::tr("Non-existent key");
-                return false;
-            }
+            splitedParams.insert(splitedKeyValue[0],splitedKeyValue[1]);
         }
-        else
+        else if  (QString::localeAwareCompare(splitedKeyValue[0], "-h"))
         {
             qDebug().noquote() << QObject::tr("Non-existent key");
-            return false;
         }
     }
-    return true;
+}
+
+bool ParamParser::findHelp ()
+{
+    for (auto keyValuePair : keyValuePairs)
+    {
+        if (!QString::localeAwareCompare(keyValuePair, keyStringByName[KeyName::Help]))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void ParamParser::checkParams ()
+{      
+    for (auto keyValue = splitedParams.begin(); keyValue != splitedParams.end(); ++keyValue)
+        for (auto it = keyStringByName.begin(); it != keyStringByName.end(); ++it)
+        {
+            if (!QString::localeAwareCompare(keyValue.key(), it.value()))
+            {
+                switch (it.key())
+                {
+                case KeyName::Lang:
+                    if (checkLang(keyValue.value())) params["lang"] = keyValue.value();
+                    break;
+                case KeyName::Ip:
+                    if (checkIp(keyValue.value())) params["ip"] = keyValue.value();
+                    break;
+                case KeyName::Port:
+                    if (checkPort(keyValue.value())) params["port"] = keyValue.value();
+                    break;
+                case KeyName::Path:
+                    if (checkPath(keyValue.value())) params["path"] = keyValue.value();
+                    break;
+                default:
+                    //введен неизвестный параметр
+                    std::cout << QObject::tr("Non-existent key").toUtf8().constData() << std::endl;
+                    break;
+             }
+         }
+    }
 }
 
 
@@ -125,7 +135,7 @@ bool ParamParser::checkIp (const  QString &checkingIpAdress)
                      "(.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])){3}$");
     if (!regExpIp.exactMatch(checkingIpAdress))
     {
-        qDebug().noquote() << QObject::tr("Invalid ip-address");
+        std::cout << QObject::tr("Invalid ip-address").toUtf8().constData() << std::endl;
         return false;
     }
     return true;
@@ -137,7 +147,7 @@ bool ParamParser::checkPort (const QString &checkingPort)
     int port = checkingPort.toInt(&ok, 10);
     if ((ok == false) || (port < 0) || (port > 65535))
     {
-        qDebug().noquote() << QObject::tr("Invalid port number");
+        std::cout << QObject::tr("Invalid port number").toUtf8().constData() << std::endl;
         return false;
     }
     return true;
@@ -145,6 +155,17 @@ bool ParamParser::checkPort (const QString &checkingPort)
 
 bool ParamParser::checkLang (const QString &checkingLang)
 {
-    if ((checkingLang == "rus") || (checkingLang == "eng")) return true;
-    else return false;
+    return ((checkingLang == "rus") || (checkingLang == "eng"));
+}
+
+bool ParamParser::checkPath (const QString &checkingPath)
+{
+
+    QRegExp regExpPath("^(/)?[A-Za-z0-9-_][A-Za-z0-9-_.]*((/)[A-Za-z0-9-_][A-Za-z0-9-_.]*)*$");
+    if (!regExpPath.exactMatch(checkingPath))
+    {
+        std::cout << QObject::tr("Invalid folder name").toUtf8().constData() << std::endl;
+        return false;
+    }
+    return true;
 }

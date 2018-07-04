@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <QObject>
 #include <QMap>
@@ -25,24 +25,42 @@ public:
 
     ParamParser(int argc, char *argv[]);
 
-    //поск языкового ключа
-    bool findLang (QMap<QString, QString> &params);
-    //поиск ключа -h и вывод справки при его наличии
-    bool findHelp();
-    //разбивает введеный запрос на ключ-значение и обновляет значения исходных параметров
-    bool parseParams(QMap<QString, QString> &params);
+    //вывод справки при его наличии
+    bool getHelp();
+    //получение ip-адреса
+    QString getIp();
+    //получение номера порта
+    int getPort();
+    //получение названия папки
+    QString getPath();
+    //получение языка
+    QString getLang();
 
 private:
+    //разбивает введеный запрос на ключ-значение
+    void parseParams();
+    //проверяет разбитые значения
+    void checkParams();
+    //поиск ключа -h
+    bool findHelp();
+
     //проверяет Ip-адрес на соответствие общему виду
     static bool checkIp (const QString &checkingIpAdress);
     //проверяет введенный номер порта на соответствие диапазону и символам
     static bool checkPort (const QString &checkingPort);
     //проверяет языковой ключ
     static bool checkLang (const QString &checkingLang);
+    //проверяет путь
+    static bool checkPath (const QString &checkingPath);
 
-    //введенные значения ключей
+    //введенные значения ключей(не разделенные)
     QList<QString> keyValuePairs;
+    //название ключей, используемые для сравнения с введенными значениями
     QMap<KeyName, QString> keyStringByName;
+    //соответствия ключ-значение
+    QMap<QString, QString> params;
+    //введенные значения ключей(разделенные)
+    QMap<QString, QString> splitedParams;
 };
 
 

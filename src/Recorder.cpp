@@ -31,17 +31,20 @@ Recorder::~Recorder()
 
 void Recorder::OnConnected()
 {
-    qDebug().noquote() << QTime::currentTime().toString("hh.mm.ss") << QObject::tr(" Connected");
+    std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData()
+              << QObject::tr(" Connected").toUtf8().constData() << std::endl;
 }
 
 void Recorder::OnConnectionFailed()
 {
-    qDebug().noquote() << QTime::currentTime().toString("hh.mm.ss") << QObject::tr(" Connection Failed");
+    std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData()
+              << QObject::tr(" Connection Failed").toUtf8().constData() << std::endl;
 }
 
 void Recorder::OnDisconnected()
 {
-    qDebug().noquote() << QTime::currentTime().toString("hh.mm.ss") << QObject::tr(" Disconnected");
+    std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData()
+              << QObject::tr(" Disconnected").toUtf8().constData() << std::endl;
 }
 
 void Recorder::OnData(const uint8_t* data, size_t size)
@@ -113,12 +116,14 @@ bool Recorder::newFileRecord()
     m_file->setFileName(m_recordsBankPath.path() + "/" + dir + "/" + filename);
     if(m_file->open(QIODevice::WriteOnly))
     {
-        qDebug().noquote() << QTime::currentTime().toString("hh.mm.ss") << QObject::tr(" Start record in ") << m_file->fileName();
+        std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData()
+                  << QObject::tr(" Start record in ").toUtf8().constData() << m_file->fileName().toStdString() << std::endl;
         return true;
     }
     else
     {
-        qDebug().noquote() << QTime::currentTime().toString("hh.mm.ss") << QObject::tr(" File not open ") << m_file->fileName();
+        std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData()
+                  << QObject::tr(" File not open ").toUtf8().constData() << m_file->fileName().toStdString() << std::endl;
         return false;
     }
 }

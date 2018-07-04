@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU" sourcelanguage="en">
+<TS version="2.1" language="ru_RU" sourcelanguage="en">
 <context>
     <name>QObject</name>
     <message>
@@ -13,7 +13,7 @@
         <translation type="obsolete">строка для перевода</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="30"/>
+        <location filename="../src/ParamParser.cpp" line="57"/>
         <source>Used keys:</source>
         <translation>Используемые ключи:</translation>
     </message>
@@ -30,79 +30,94 @@
         <translation type="obsolete">path=[имя папки]\tзадать именя папки</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="31"/>
+        <location filename="../src/ParamParser.cpp" line="60"/>
         <source>ip=[ip-adress]</source>
         <translation>ip=[ip-адрес]</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="31"/>
+        <location filename="../src/ParamParser.cpp" line="61"/>
         <source>set ip-adress</source>
         <translation>задать ip-адрес</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="32"/>
+        <location filename="../src/ParamParser.cpp" line="62"/>
         <source>port=[port number]</source>
         <translation>port=[номер порта]</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="32"/>
+        <location filename="../src/ParamParser.cpp" line="63"/>
         <source>set port number</source>
         <translation>задать номер порта</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="33"/>
+        <location filename="../src/ParamParser.cpp" line="64"/>
         <source>path=[folder name]</source>
         <translation>path=[имя папки]</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="33"/>
+        <location filename="../src/ParamParser.cpp" line="65"/>
         <source>set folder name</source>
         <translation>задать именя папки</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="87"/>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="93"/>
+        <location filename="../src/ParamParser.cpp" line="167"/>
+        <source>Invalid folder name</source>
+        <translation>Неверное имя папки</translation>
+    </message>
+    <message>
+        <location filename="../src/ParamParser.cpp" line="84"/>
+        <location filename="../src/ParamParser.cpp" line="124"/>
         <source>Non-existent key</source>
         <translation>Несуществующий ключ</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="108"/>
+        <location filename="../src/ParamParser.cpp" line="58"/>
+        <source>lang=[language]</source>
+        <translation>lang=[название языка]</translation>
+    </message>
+    <message>
+        <location filename="../src/ParamParser.cpp" line="59"/>
+        <source>set language (eng or rus)</source>
+        <translation>задать язык (eng или rus)</translation>
+    </message>
+    <message>
+        <location filename="../src/ParamParser.cpp" line="138"/>
         <source>Invalid ip-address</source>
         <translation>Неверный ip-адрес</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/ParamParser.cpp" line="120"/>
+        <location filename="../src/ParamParser.cpp" line="150"/>
         <source>Invalid port number</source>
         <translation>Неверный номер порта</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/Recorder.cpp" line="34"/>
+        <location filename="../src/Recorder.cpp" line="35"/>
         <source> Connected</source>
-        <translation>Соединение установлено</translation>
+        <translation> Соединение установлено</translation>
     </message>
     <message>
         <source> ConnectionFailed</source>
         <translation type="obsolete">Ошибка соединения</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/Recorder.cpp" line="39"/>
+        <location filename="../src/Recorder.cpp" line="41"/>
         <source> Connection Failed</source>
-        <translation>Ошибка соединения</translation>
+        <translation> Ошибка соединения</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/Recorder.cpp" line="44"/>
+        <location filename="../src/Recorder.cpp" line="47"/>
         <source> Disconnected</source>
-        <translation>Соединение разорвано</translation>
+        <translation> Соединение разорвано</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/Recorder.cpp" line="116"/>
+        <location filename="../src/Recorder.cpp" line="120"/>
         <source> Start record in </source>
-        <translation>Начата запись в файл</translation>
+        <translation> Начата запись в файл</translation>
     </message>
     <message>
-        <location filename="../../lemzt/src/Recorder.cpp" line="121"/>
+        <location filename="../src/Recorder.cpp" line="126"/>
         <source> File not open </source>
-        <translation>Не удалось открыть файл</translation>
+        <translation> Не удалось открыть файл</translation>
     </message>
 </context>
 </TS>
