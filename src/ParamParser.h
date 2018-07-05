@@ -26,15 +26,15 @@ public:
     ParamParser(int argc, char *argv[]);
 
     //вывод справки при его наличии
-    bool getHelp();
+    bool getHelp() const;
     //получение ip-адреса
-    QString getIp();
+    QString getIp() const;
     //получение номера порта
-    int getPort();
+    int getPort() const;
     //получение названия папки
-    QString getPath();
+    QString getPath() const;
     //получение языка
-    QString getLang();
+    QString getLang() const;
 
 private:
     //разбивает введеный запрос на ключ-значение
@@ -42,7 +42,7 @@ private:
     //проверяет разбитые значения
     void checkParams();
     //поиск ключа -h
-    bool findHelp();
+    bool findHelp() const;
 
     //проверяет Ip-адрес на соответствие общему виду
     static bool checkIp (const QString &checkingIpAdress);
@@ -54,11 +54,11 @@ private:
     static bool checkPath (const QString &checkingPath);
 
     //введенные значения ключей(не разделенные)
-    QList<QString> keyValuePairs;
+    QStringList keyValuePairs;
     //название ключей, используемые для сравнения с введенными значениями
     QMap<KeyName, QString> keyStringByName;
     //соответствия ключ-значение
-    QMap<QString, QString> params;
+    QMap<KeyName, QString> params;
     //введенные значения ключей(разделенные)
     QMap<QString, QString> splitedParams;
 };

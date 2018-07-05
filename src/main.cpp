@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
 
     QTranslator t;
-    if (!QString::localeAwareCompare(paramParser.getLang(), "rus"))
+    if (paramParser.getLang() == "rus")
     {
         t.load(":/tr/recorder_rus.qm");
         a.installTranslator(&t);
@@ -28,8 +28,10 @@ int main(int argc, char *argv[])
 
         tcp.SetConnectionCallback(rec);
         tcp.connect(paramParser.getIp(), paramParser.getPort());
+        return a.exec();
     }
+    else return 0;
 
-   return a.exec();
+
 }
 

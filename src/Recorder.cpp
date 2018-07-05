@@ -31,20 +31,20 @@ Recorder::~Recorder()
 
 void Recorder::OnConnected()
 {
-    std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData()
-              << QObject::tr(" Connected").toUtf8().constData() << std::endl;
+    std::cout << QTime::currentTime().toString("hh.mm.ss").toStdString()
+              << tr(" Connected").toStdString() << std::endl;
 }
 
 void Recorder::OnConnectionFailed()
 {
-    std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData()
-              << QObject::tr(" Connection Failed").toUtf8().constData() << std::endl;
+    std::cout << QTime::currentTime().toString("hh.mm.ss").toStdString()
+              << tr(" Connection Failed").toStdString() << std::endl;
 }
 
 void Recorder::OnDisconnected()
 {
-    std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData()
-              << QObject::tr(" Disconnected").toUtf8().constData() << std::endl;
+    std::cout << QTime::currentTime().toString("hh.mm.ss").toStdString()
+              << tr(" Disconnected").toStdString() << std::endl;
 }
 
 void Recorder::OnData(const uint8_t* data, size_t size)
@@ -116,14 +116,14 @@ bool Recorder::newFileRecord()
     m_file->setFileName(m_recordsBankPath.path() + "/" + dir + "/" + filename);
     if(m_file->open(QIODevice::WriteOnly))
     {
-        std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData()
-                  << QObject::tr(" Start record in ").toUtf8().constData() << m_file->fileName().toStdString() << std::endl;
+        std::cout << QTime::currentTime().toString("hh.mm.ss").toStdString()
+                  << tr(" Start record in ").toStdString() << m_file->fileName().toStdString() << std::endl;
         return true;
     }
     else
     {
-        std::cout << QTime::currentTime().toString("hh.mm.ss").toUtf8().constData()
-                  << QObject::tr(" File not open ").toUtf8().constData() << m_file->fileName().toStdString() << std::endl;
+        std::cout << QTime::currentTime().toString("hh.mm.ss").toStdString()
+                  << tr(" File not open ").toStdString() << m_file->fileName().toStdString() << std::endl;
         return false;
     }
 }
