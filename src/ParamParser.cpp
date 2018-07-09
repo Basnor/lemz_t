@@ -17,7 +17,7 @@ ParamParser::ParamParser(int argc, char *argv[])
     keyStringByName.insert(KeyName::Lang, "lang");
 
     params.insert(KeyName::Ip, "127.0.0.1");
-    params.insert(KeyName::Port, "10600");
+    params.insert(KeyName::Port, "10700");
     params.insert(KeyName::Path, "dspRec");
     params.insert(KeyName::Lang, "eng");
 
@@ -27,8 +27,9 @@ ParamParser::ParamParser(int argc, char *argv[])
         keyValuePairs.append(keyValuePair);
     }
 
-    parseParams();
-    checkParams();
+    if (parseParams())
+        checkParams() ? isParamsCorrect = true : isParamsCorrect = false;
+    else isParamsCorrect = false;
 }
 
 QString ParamParser::getLang() const
@@ -51,25 +52,20 @@ QString ParamParser::getPath() const
     return params[KeyName::Path];
 }
 
-bool ParamParser::getHelp () const
+void ParamParser::getHelp () const
 {
-    if (findHelp())
-    {
-        std::cout << QObject::tr("Used keys:").toStdString() << std::endl; // Используемые ключи
-        std::cout << QObject::tr("lang=[language]").toStdString()
-                  << "\t" << QObject::tr("set language (eng or rus)").toStdString() << std::endl;
-        std::cout << QObject::tr("ip=[ip-adress]").toStdString()
-                  << "\t\t" << QObject::tr("set ip-adress").toStdString() << std::endl;
-        std::cout << QObject::tr("port=[port number]").toStdString()
-                  << "\t" << QObject::tr("set port number").toStdString() << std::endl;
-        std::cout << QObject::tr("path=[folder name]").toStdString()
-                  << "\t" << QObject::tr("set folder name").toStdString() << std::endl;
-        return true;
-    }
-    return false;
+    std::cout << QObject::tr("Used keys:").toStdString() << std::endl; // Используемые ключи
+    std::cout << QObject::tr("lang=[language]").toStdString()
+              << "\t" << QObject::tr("set language (eng or rus)").toStdString() << std::endl;
+    std::cout << QObject::tr("ip=[ip-adress]").toStdString()
+              << "\t\t" << QObject::tr("set ip-adress").toStdString() << std::endl;
+    std::cout << QObject::tr("port=[port number]").toStdString()
+              << "\t" << QObject::tr("set port number").toStdString() << std::endl;
+    std::cout << QObject::tr("path=[folder name]").toStdString()
+              << "\t" << QObject::tr("set folder name").toStdString() << std::endl;
 }
 
-void ParamParser::parseParams()
+bool ParamParser::parseParams()
 {
     for (auto keyValue : keyValuePairs)
     {
@@ -80,11 +76,13 @@ void ParamParser::parseParams()
         {
             splitedParams.insert(splitedKeyValue[0],splitedKeyValue[1]);
         }
-        else if  (splitedKeyValue[0] == "-h")
+        else if (!(splitedKeyValue[0] == "-h"))
         {
-             std::cout <<QObject::tr("Non-existent key").toStdString() << std::endl;
+             showErrorKey();
+             return false;
         }
     }
+    return true;
 }
 
 bool ParamParser::findHelp() const
@@ -92,36 +90,75 @@ bool ParamParser::findHelp() const
     return keyValuePairs.contains(keyStringByName[KeyName::Help]);
 }
 
-void ParamParser::checkParams()
+bool ParamParser::checkParams()
 {      
+    bool isMatch = false;
+
     for (auto keyValue = splitedParams.begin(); keyValue != splitedParams.end(); ++keyValue)
+    {
+        isMatch = false;
+
         for (auto it = keyStringByName.begin(); it != keyStringByName.end(); ++it)
         {
             if (keyValue.key() == it.value())
             {
+                isMatch = true;
+
                 switch (it.key())
                 {
                 case KeyName::Lang:
                     if (checkLang(keyValue.value())) params[it.key()] = keyValue.value();
+                    else
+                    {
+                        showErrorLang();
+                        return false;
+                    }
                     break;
                 case KeyName::Ip:
                     if (checkIp(keyValue.value())) params[it.key()] = keyValue.value();
+                    else
+                    {
+                        showErrorIp();
+                        return false;
+                    }
                     break;
                 case KeyName::Port:
                     if (checkPort(keyValue.value())) params[it.key()] = keyValue.value();
+                    else
+                    {
+                        showErrorPort();
+                        return false;
+                    }
                     break;
                 case KeyName::Path:
-                    if (checkPath(keyValue.value())) params[it.key()] = keyValue.value();
+                    if (createPath(keyValue.value())) params[it.key()] = keyValue.value();
+                    else
+                    {
+                        showErrorPath();
+                        return false;
+                    }
                     break;
                 default:
-                    //введен неизвестный параметр
-                    std::cout << QObject::tr("Non-existent key").toStdString() << std::endl;
+                    return false;
                     break;
-             }
-         }
+                }
+            }
+        }
+        if (!isMatch)//введен неизвестный параметр
+        {
+            showErrorKey();
+            return false;
+        }
     }
+
+    return true;
 }
 
+void ParamParser::showErrorKey() const
+{
+    std::cout << QObject::tr("Non-existent key").toStdString() << std::endl;
+    getHelp();
+}
 
 bool ParamParser::checkIp (const  QString &checkingIpAdress)
 {
@@ -129,10 +166,14 @@ bool ParamParser::checkIp (const  QString &checkingIpAdress)
                      "(.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])){3}$");
     if (!regExpIp.exactMatch(checkingIpAdress))
     {
-        std::cout << QObject::tr("Invalid ip-address").toStdString() << std::endl;
         return false;
     }
     return true;
+}
+
+void ParamParser::showErrorIp() const
+{
+    std::cout << QObject::tr("Invalid ip-address").toStdString() << std::endl;
 }
 
 bool ParamParser::checkPort (const QString &checkingPort)
@@ -141,10 +182,25 @@ bool ParamParser::checkPort (const QString &checkingPort)
     int port = checkingPort.toInt(&ok, 10);
     if ((ok == false) || (port < 0) || (port > 65535))
     {
-        std::cout << QObject::tr("Invalid port number").toStdString() << std::endl;
         return false;
     }
     return true;
+}
+
+void ParamParser::showErrorPort()  const
+{
+    std::cout << QObject::tr("Invalid port number").toStdString() << std::endl;
+}
+
+bool ParamParser::createPath (const QString &checkingPath)
+{
+    QDir Path;
+    return Path.mkpath(checkingPath);
+}
+
+void ParamParser::showErrorPath() const
+{
+    std::cout << QObject::tr("Invalid folder name").toStdString() << std::endl;
 }
 
 bool ParamParser::checkLang (const QString &checkingLang)
@@ -152,23 +208,7 @@ bool ParamParser::checkLang (const QString &checkingLang)
     return ((checkingLang == "rus") || (checkingLang == "eng"));
 }
 
-bool ParamParser::checkPath (const QString &checkingPath)
+void ParamParser::showErrorLang() const
 {
-
-    /*QRegExp regExpPath("^(/)?[A-Za-z0-9-_][A-Za-z0-9-_.]*((/)[A-Za-z0-9-_][A-Za-z0-9-_.]*)*$");
-    if (!regExpPath.exactMatch(checkingPath))
-    {
-        std::cout << QObject::tr("Invalid folder name").toStdString() << std::endl;
-        return false;
-    } */
-
-    QDir Path;
-    if(Path.mkpath(checkingPath))
-    {
-        return true;
-    }
-    else {
-        std::cout << QObject::tr("Invalid folder name").toStdString() << std::endl;
-        return false;
-    }
+    std::cout << QObject::tr("Invalid language").toStdString() << std::endl;
 }
