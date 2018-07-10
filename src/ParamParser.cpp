@@ -14,12 +14,10 @@ ParamParser::ParamParser(int argc, char *argv[])
     keyStringByName.insert(KeyName::Ip, "ip");
     keyStringByName.insert(KeyName::Port, "port");
     keyStringByName.insert(KeyName::Path, "path");
-    keyStringByName.insert(KeyName::Lang, "lang");
 
     params.insert(KeyName::Ip, "127.0.0.1");
     params.insert(KeyName::Port, "10700");
     params.insert(KeyName::Path, "dspRec");
-    params.insert(KeyName::Lang, "eng");
 
     for (auto i=1; i < argc; i++)
     {
@@ -30,11 +28,6 @@ ParamParser::ParamParser(int argc, char *argv[])
     if (parseParams())
         checkParams() ? isParamsCorrect = true : isParamsCorrect = false;
     else isParamsCorrect = false;
-}
-
-QString ParamParser::getLang() const
-{
-    return params[KeyName::Lang];
 }
 
 QString ParamParser::getIp() const
@@ -55,8 +48,6 @@ QString ParamParser::getPath() const
 void ParamParser::getHelp () const
 {
     std::cout << QObject::tr("Used keys:").toStdString() << std::endl; // Используемые ключи
-    std::cout << QObject::tr("lang=[language]").toStdString()
-              << "\t" << QObject::tr("set language (eng or rus)").toStdString() << std::endl;
     std::cout << QObject::tr("ip=[ip-adress]").toStdString()
               << "\t\t" << QObject::tr("set ip-adress").toStdString() << std::endl;
     std::cout << QObject::tr("port=[port number]").toStdString()
@@ -106,14 +97,6 @@ bool ParamParser::checkParams()
 
                 switch (it.key())
                 {
-                case KeyName::Lang:
-                    if (checkLang(keyValue.value())) params[it.key()] = keyValue.value();
-                    else
-                    {
-                        showErrorLang();
-                        return false;
-                    }
-                    break;
                 case KeyName::Ip:
                     if (checkIp(keyValue.value())) params[it.key()] = keyValue.value();
                     else
@@ -201,14 +184,4 @@ bool ParamParser::createPath (const QString &checkingPath)
 void ParamParser::showErrorPath() const
 {
     std::cout << QObject::tr("Invalid folder name").toStdString() << std::endl;
-}
-
-bool ParamParser::checkLang (const QString &checkingLang)
-{
-    return ((checkingLang == "rus") || (checkingLang == "eng"));
-}
-
-void ParamParser::showErrorLang() const
-{
-    std::cout << QObject::tr("Invalid language").toStdString() << std::endl;
 }

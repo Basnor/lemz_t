@@ -13,7 +13,7 @@
         <translation type="obsolete">строка для перевода</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="57"/>
+        <location filename="../src/ParamParser.cpp" line="50"/>
         <source>Used keys:</source>
         <translation>Используемые ключи:</translation>
     </message>
@@ -30,67 +30,60 @@
         <translation type="obsolete">path=[имя папки]\tзадать именя папки</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="60"/>
+        <location filename="../src/ParamParser.cpp" line="51"/>
         <source>ip=[ip-adress]</source>
         <translation>ip=[ip-адрес]</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="61"/>
+        <location filename="../src/ParamParser.cpp" line="52"/>
         <source>set ip-adress</source>
         <translation>задать ip-адрес</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="62"/>
+        <location filename="../src/ParamParser.cpp" line="53"/>
         <source>port=[port number]</source>
         <translation>port=[номер порта]</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="63"/>
+        <location filename="../src/ParamParser.cpp" line="54"/>
         <source>set port number</source>
         <translation>задать номер порта</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="64"/>
+        <location filename="../src/ParamParser.cpp" line="55"/>
         <source>path=[folder name]</source>
         <translation>path=[имя папки]</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="65"/>
+        <location filename="../src/ParamParser.cpp" line="56"/>
         <source>set folder name</source>
         <translation>задать именя папки</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="203"/>
+        <location filename="../src/ParamParser.cpp" line="186"/>
         <source>Invalid folder name</source>
         <translation>Неверное имя папки</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="213"/>
-        <source>Invalid language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ParamParser.cpp" line="159"/>
+        <location filename="../src/ParamParser.cpp" line="142"/>
         <source>Non-existent key</source>
         <translation>Несуществующий ключ</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="58"/>
         <source>lang=[language]</source>
-        <translation>lang=[название языка]</translation>
+        <translation type="vanished">lang=[название языка]</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="59"/>
         <source>set language (eng or rus)</source>
-        <translation>задать язык (eng или rus)</translation>
+        <translation type="vanished">задать язык (eng или rus)</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="176"/>
+        <location filename="../src/ParamParser.cpp" line="159"/>
         <source>Invalid ip-address</source>
         <translation>Неверный ip-адрес</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="192"/>
+        <location filename="../src/ParamParser.cpp" line="175"/>
         <source>Invalid port number</source>
         <translation>Неверный номер порта</translation>
     </message>
@@ -124,27 +117,27 @@
     <message>
         <location filename="../src/Recorder.cpp" line="35"/>
         <source> Connected</source>
-        <translation type="unfinished"> Соединение установлено</translation>
+        <translation> Соединение установлено</translation>
     </message>
     <message>
         <location filename="../src/Recorder.cpp" line="41"/>
         <source> Connection Failed</source>
-        <translation type="unfinished"> Ошибка соединения</translation>
+        <translation> Ошибка соединения</translation>
     </message>
     <message>
         <location filename="../src/Recorder.cpp" line="47"/>
         <source> Disconnected</source>
-        <translation type="unfinished"> Соединение разорвано</translation>
+        <translation> Соединение разорвано</translation>
     </message>
     <message>
         <location filename="../src/Recorder.cpp" line="120"/>
         <source> Start record in </source>
-        <translation type="unfinished"> Начата запись в файл</translation>
+        <translation> Начата запись в файл</translation>
     </message>
     <message>
         <location filename="../src/Recorder.cpp" line="126"/>
         <source> File not open </source>
-        <translation type="unfinished"> Не удалось открыть файл</translation>
+        <translation> Не удалось открыть файл</translation>
     </message>
 </context>
 </TS>

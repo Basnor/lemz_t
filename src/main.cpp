@@ -9,15 +9,18 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    ParamParser paramParser(argc, argv);
 
     QTranslator t;
-    if (paramParser.getLang() == "rus")
+    if (std::string(getenv("LANG")) == "en_US.UTF-8")
+        ;
+    else if (std::string(getenv("LANG")) == "ru_RU.UTF-8")
     {
         t.load(":/tr/recorder_rus.qm");
         a.installTranslator(&t);
     }
+    //else std::cout << "Неверное значение LANG" << std::endl;
 
+    ParamParser paramParser(argc, argv);
     DspClient tcp;
     Recorder* rec = new Recorder(&tcp);
 
@@ -37,7 +40,5 @@ int main(int argc, char *argv[])
         paramParser.getHelp();
         return 0;
     }
-
-
 }
 
