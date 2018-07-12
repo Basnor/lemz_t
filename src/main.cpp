@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        paramParser.getHelp();
+        paramParser.showHelp();
         return 0;
     }
 }

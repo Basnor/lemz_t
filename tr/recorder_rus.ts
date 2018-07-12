@@ -13,7 +13,7 @@
         <translation type="obsolete">строка для перевода</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="50"/>
+        <location filename="../src/ParamParser.cpp" line="49"/>
         <source>Used keys:</source>
         <translation>Используемые ключи:</translation>
     </message>
@@ -30,42 +30,42 @@
         <translation type="obsolete">path=[имя папки]\tзадать именя папки</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="51"/>
+        <location filename="../src/ParamParser.cpp" line="50"/>
         <source>ip=[ip-adress]</source>
         <translation>ip=[ip-адрес]</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="52"/>
+        <location filename="../src/ParamParser.cpp" line="51"/>
         <source>set ip-adress</source>
         <translation>задать ip-адрес</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="53"/>
+        <location filename="../src/ParamParser.cpp" line="52"/>
         <source>port=[port number]</source>
         <translation>port=[номер порта]</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="54"/>
+        <location filename="../src/ParamParser.cpp" line="53"/>
         <source>set port number</source>
         <translation>задать номер порта</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="55"/>
+        <location filename="../src/ParamParser.cpp" line="54"/>
         <source>path=[folder name]</source>
         <translation>path=[имя папки]</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="56"/>
+        <location filename="../src/ParamParser.cpp" line="55"/>
         <source>set folder name</source>
         <translation>задать именя папки</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="186"/>
+        <location filename="../src/ParamParser.cpp" line="181"/>
         <source>Invalid folder name</source>
         <translation>Неверное имя папки</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="142"/>
+        <location filename="../src/ParamParser.cpp" line="141"/>
         <source>Non-existent key</source>
         <translation>Несуществующий ключ</translation>
     </message>
@@ -78,12 +78,12 @@
         <translation type="vanished">задать язык (eng или rus)</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="159"/>
+        <location filename="../src/ParamParser.cpp" line="154"/>
         <source>Invalid ip-address</source>
         <translation>Неверный ip-адрес</translation>
     </message>
     <message>
-        <location filename="../src/ParamParser.cpp" line="175"/>
+        <location filename="../src/ParamParser.cpp" line="170"/>
         <source>Invalid port number</source>
         <translation>Неверный номер порта</translation>
     </message>

@@ -25,8 +25,7 @@ ParamParser::ParamParser(int argc, char *argv[])
         keyValuePairs.append(keyValuePair);
     }
 
-    if (parseParams())
-        checkParams() ? isParamsCorrect = true : isParamsCorrect = false;
+    if (parseParams()) isParamsCorrect = checkParams();
     else isParamsCorrect = false;
 }
 
@@ -45,7 +44,7 @@ QString ParamParser::getPath() const
     return params[KeyName::Path];
 }
 
-void ParamParser::getHelp () const
+void ParamParser::showHelp () const
 {
     std::cout << QObject::tr("Used keys:").toStdString() << std::endl; // Используемые ключи
     std::cout << QObject::tr("ip=[ip-adress]").toStdString()
@@ -114,7 +113,7 @@ bool ParamParser::checkParams()
                     }
                     break;
                 case KeyName::Path:
-                    if (createPath(keyValue.value())) params[it.key()] = keyValue.value();
+                    if (checkPath(keyValue.value())) params[it.key()] = keyValue.value();
                     else
                     {
                         showErrorPath();
@@ -140,18 +139,14 @@ bool ParamParser::checkParams()
 void ParamParser::showErrorKey() const
 {
     std::cout << QObject::tr("Non-existent key").toStdString() << std::endl;
-    getHelp();
+    showHelp();
 }
 
 bool ParamParser::checkIp (const  QString &checkingIpAdress)
 {
     QRegExp regExpIp("^(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])"
                      "(.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])){3}$");
-    if (!regExpIp.exactMatch(checkingIpAdress))
-    {
-        return false;
-    }
-    return true;
+    return regExpIp.exactMatch(checkingIpAdress);
 }
 
 void ParamParser::showErrorIp() const
@@ -175,10 +170,10 @@ void ParamParser::showErrorPort()  const
     std::cout << QObject::tr("Invalid port number").toStdString() << std::endl;
 }
 
-bool ParamParser::createPath (const QString &checkingPath)
+bool ParamParser::checkPath (const QString &checkingPath)
 {
-    QDir Path;
-    return Path.mkpath(checkingPath);
+    QRegExp regExpPath("^(/)?[A-Za-z0-9-_.]+((/)[A-Za-z0-9-_.]+)*$");
+    return regExpPath.exactMatch(checkingPath);
 }
 
 void ParamParser::showErrorPath() const

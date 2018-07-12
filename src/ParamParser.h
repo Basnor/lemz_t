@@ -27,7 +27,7 @@ public:
     bool isParamsCorrect = true;
 
     //вывод справки при его наличии
-    void getHelp() const;
+    void showHelp() const;
     //получение ip-адреса
     QString getIp() const;
     //получение номера порта
@@ -49,7 +49,7 @@ private:
     //проверяет введенный номер порта на соответствие диапазону и символам
     static bool checkPort (const QString &checkingPort);
     //проверяет путь
-    static bool createPath (const QString &checkingPath);
+    static bool checkPath (const QString &checkingPath);
 
     //вывод сообщений об ошибках
     void showErrorIp() const; //неверный ip-адрес
